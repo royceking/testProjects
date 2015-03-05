@@ -84,5 +84,23 @@ class House
 	def monthly_cost (extra_costs = 0)
 		total = @monthly_payment + self.monthly_mip + self.monthly_taxes + self.monthly_insurance + extra_costs 
 	end
+
+	def get_loan_stats (payments)
+		principal = 0
+		interest = 0
+		balance = @loan_amount
+		
+		payments.times do |p|
+			payment_interest = (balance * @interest_rate)/12
+			payment_principal = @monthly_payment - payment_interest
+			principal += payment_principal.round
+			interest += payment_interest.round
+			balance = balance - payment_principal 
+		end
+		return {:balance => balance, :principal => principal, :interest => interest}
+	end
 end
+
+
+
 

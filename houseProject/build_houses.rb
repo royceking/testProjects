@@ -1,5 +1,5 @@
- require "./house_obj.rb"
- require 'ap'
+require "./house_obj.rb"
+require "awesome_print"
  
 intitial_money = 20000
  
@@ -47,11 +47,15 @@ homes = {}
 # end
 
 years.each do |year|
-	payments = year * 12
-	stats = house1.get_loan_stats(payments)
-	puts "Year #{year}"
-	puts "loan balance = $#{stats[:balance]}"
-	puts "Principal paid = $#{stats[:principal]}"
-	puts "interest paid = $#{stats[:interest]}"
-	puts
+	puts year.to_s
+	ap house1.stats["year_#{year}"]
 end
+
+puts "Monthly Loan Payment = $#{house1.monthly_payment}"
+puts "Monthly Insurance = $#{house1.monthly_insurance}"
+puts "Monthly Taxes = $#{house1.monthly_taxes}"
+puts "Monthly MIP = $#{house1.monthly_mip}"
+puts "Monthly Cost = $#{house1.monthly_cost}"
+puts "Proposed monly rent rate = $#{house1.rental_rate}"
+puts "Total paid to lender = $#{house1.total_loan_amount}"
+puts "Total interest paid to lender = $#{house1.total_loan_interest}"

@@ -1,5 +1,5 @@
 class House
-	attr_accessor :price, :downpayment, :taxes, :insurance, :interest_rate, :rental_rate, :monthly_payment, :loan_term, :loan_amount, :mip
+	attr_accessor :price, :downpayment, :taxes, :insurance, :interest_rate, :rental_rate, :monthly_payment, :loan_term, :loan_amount, :mip, :stats
 	def initialize(price, downpayment, taxes, interest_rate, insurance, loan_term)
 		@price = price
 		@downpayment = downpayment
@@ -10,6 +10,7 @@ class House
 		@loan_term = loan_term
 		@monthly_payment = self.get_monthly_payment
 		@rental_rate = self.monthly_cost(200)
+		@stats = self.build_stats
 	end
  
 	def get_yearly_cost (extra_costs = 0)
@@ -85,17 +86,28 @@ class House
 		total = @monthly_payment + self.monthly_mip + self.monthly_taxes + self.monthly_insurance + extra_costs 
 	end
 
+	def build_stats
+		stats = {}
+		(@loan_term + 1).times do |year|
+			payments = year * 12
+			stats["year_#{year}"] = self.get_loan_stats(payments)
+		end
+		return stats
+
+	end
+
 	def get_loan_stats (payments)
-		principal = 0
+		principal = @downpayment
 		interest = 0
 		balance = @loan_amount
-		
-		payments.times do |p|
-			payment_interest = (balance * @interest_rate)/12
-			payment_principal = @monthly_payment - payment_interest
-			principal += payment_principal.round
-			interest += payment_interest.round
-			balance = balance - payment_principal 
+		unless payments == 0
+			payments.times do |p|
+				payment_interest = (balance * @interest_rate)/12
+				payment_principal = @monthly_payment - payment_interest
+				principal += payment_principal.round
+				interest += payment_interest.round
+				balance = balance - payment_principal.round
+			end
 		end
 		return {:balance => balance, :principal => principal, :interest => interest}
 	end

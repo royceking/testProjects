@@ -20,42 +20,44 @@ years = (1..30).to_a
 
 homes = {}
 
-# years.each do |year|
-# 	house_price = (150000 + rand(100000))
-# 	taxes = (house_price * 0.006).round
-# 	insurance = 130
-# 	downpayment = 10000
-# 	term = 30
-
-# 	homes["house#{year}"] = House.new(house_price, downpayment, taxes, 0.04, insurance, term)
-# 	house = House.new(house_price, downpayment, taxes, 0.04, insurance, term)
-# 	puts "******************************************"
-# 	puts "House #{year}"
-# 	puts
-# 	puts "House Price = $#{house.price}"
-# 	puts "House downpayment = $#{house.downpayment}"
-# 	puts "Monthly Loan Payment = $#{house.monthly_payment}"
-# 	puts "Monthly Insurance = $#{house.monthly_insurance}"
-# 	puts "Monthly Taxes = $#{house.monthly_taxes}"
-# 	puts "Monthly MIP = $#{house.monthly_mip}"
-# 	puts "Monthly Cost = $#{house.monthly_cost}"
-# 	puts "Proposed monly rent rate = $#{house.rental_rate}"
-# 	puts "Total paid to lender = $#{house.total_loan_amount}"
-# 	puts "Total interest paid to lender = $#{house.total_loan_interest}"
-# 	puts "******************************************"
-# 	puts
-# end
-
 years.each do |year|
-	puts year.to_s
-	ap house1.stats["year_#{year}"]
+	house_price = (150000 + rand(100000))
+	taxes = (house_price * 0.006).round(2)
+	insurance = 130
+	downpayment = 10000
+	term = 30
+
+	homes["house#{year}_1"] = House.new(house_price, downpayment, taxes, 0.04, insurance, term, year)
+	house = House.new(house_price, downpayment, taxes, 0.04, insurance, term)
+
+	#homes["house#{year}_2"] = House.new((150000 + rand(100000), downpayment, (house_price * 0.006).round(2), 0.04, insurance, term, year) if year < 10
+	# puts "******************************************"
+	# puts "House #{year}"
+	# puts
+	# puts "House Price = $#{house.price}"
+	# puts "House downpayment = $#{house.downpayment}"
+	# puts "Monthly Loan Payment = $#{house.monthly_payment}"
+	# puts "Monthly Insurance = $#{house.monthly_insurance}"
+	# puts "Monthly Taxes = $#{house.monthly_taxes}"
+	# puts "Monthly MIP = $#{house.monthly_mip}"
+	# puts "Monthly Cost = $#{house.monthly_cost}"
+	# puts "Proposed monly rent rate = $#{house.rental_rate}"
+	# puts "Total paid to lender = $#{house.total_loan_amount}"
+	# puts "Total interest paid to lender = $#{house.total_loan_interest}"
+	# puts "******************************************"
+	# puts
 end
 
-puts "Monthly Loan Payment = $#{house1.monthly_payment}"
-puts "Monthly Insurance = $#{house1.monthly_insurance}"
-puts "Monthly Taxes = $#{house1.monthly_taxes}"
-puts "Monthly MIP = $#{house1.monthly_mip}"
-puts "Monthly Cost = $#{house1.monthly_cost}"
-puts "Proposed monly rent rate = $#{house1.rental_rate}"
-puts "Total paid to lender = $#{house1.total_loan_amount}"
-puts "Total interest paid to lender = $#{house1.total_loan_interest}"
+# years.each do |year|
+# 	puts year.to_s
+# 	ap house1.stats["year_#{year}"]
+# end
+
+# puts "Monthly Loan Payment = $#{house1.monthly_payment}"
+# puts "Monthly Insurance = $#{house1.monthly_insurance}"
+# puts "Monthly Taxes = $#{house1.monthly_taxes}"
+# puts "Monthly MIP = $#{house1.monthly_mip}"
+# puts "Monthly Cost = $#{house1.monthly_cost}"
+# puts "Proposed monly rent rate = $#{house1.rental_rate}"
+# puts "Total paid to lender = $#{house1.total_loan_amount}"
+# puts "Total interest paid to lender = $#{house1.total_loan_interest}"

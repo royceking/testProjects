@@ -1,6 +1,6 @@
 class House
-	attr_accessor :price, :downpayment, :taxes, :insurance, :interest_rate, :rental_rate, :monthly_payment, :loan_term, :loan_amount, :mip, :stats
-	def initialize(price, downpayment, taxes, interest_rate, insurance, loan_term)
+	attr_accessor :price, :downpayment, :taxes, :insurance, :interest_rate, :rental_rate, :monthly_payment, :loan_term, :loan_amount, :mip, :stats, :year
+	def initialize(price, downpayment, taxes, interest_rate, insurance, loan_term, year)
 		@price = price
 		@downpayment = downpayment
 		@loan_amount = price - downpayment
@@ -11,6 +11,7 @@ class House
 		@monthly_payment = self.get_monthly_payment
 		@rental_rate = self.monthly_cost(200)
 		@stats = self.build_stats
+		@year = 
 	end
  
 	def get_yearly_cost (extra_costs = 0)
@@ -26,7 +27,7 @@ class House
 		monthly_rate = (@interest_rate/12)
 		term = (1 + monthly_rate)**payments
 		monthly_payment = @loan_amount * ((monthly_rate * term)/(term - 1))
-		return monthly_payment.round
+		return monthly_payment.round(2)
 	end
  
 	def get_mip
@@ -35,7 +36,7 @@ class House
 		rate = 0.0085 if value < 0.05
 		rate = 0 if value > 0.20
 		mip = @loan_amount * rate
-		return mip.round
+		return mip.round(2)
 	end
  
 	def total_loan_amount
@@ -79,7 +80,7 @@ class House
 	end
  
 	def monthly_mip
-		total = self.get_mip/12
+		total = (self.get_mip/12).round(2)
 	end
  
 	def monthly_cost (extra_costs = 0)
@@ -100,16 +101,16 @@ class House
 		principal = @downpayment
 		interest = 0
 		balance = @loan_amount
-		unless payments == 0
-			payments.times do |p|
+		(payments + 1).times do |p|
+			unless p == 0
 				payment_interest = (balance * @interest_rate)/12
 				payment_principal = @monthly_payment - payment_interest
-				principal += payment_principal.round
-				interest += payment_interest.round
-				balance = balance - payment_principal.round
+				principal += payment_principal.round(2)
+				interest += payment_interest.round(2)
+				balance = balance - payment_principal.round(2)
 			end
 		end
-		return {:balance => balance, :principal => principal, :interest => interest}
+		return {:balance => balance.round(2), :principal => principal.round(2), :interest => interest.round(2)}
 	end
 end
 

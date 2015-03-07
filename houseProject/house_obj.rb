@@ -9,9 +9,9 @@ class House
 		@insurance = insurance
 		@loan_term = loan_term
 		@monthly_payment = self.get_monthly_payment
-		@rental_rate = self.monthly_cost(200)
+		@rental_rate = self.monthly_cost(200).round(-2)
 		@stats = self.build_stats
-		@year = 
+		@year = year
 	end
  
 	def get_yearly_cost (extra_costs = 0)
@@ -27,7 +27,7 @@ class House
 		monthly_rate = (@interest_rate/12)
 		term = (1 + monthly_rate)**payments
 		monthly_payment = @loan_amount * ((monthly_rate * term)/(term - 1))
-		return monthly_payment.round(2)
+		return monthly_payment
 	end
  
 	def get_mip
@@ -101,16 +101,19 @@ class House
 		principal = @downpayment
 		interest = 0
 		balance = @loan_amount
+		profit = 0
 		(payments + 1).times do |p|
 			unless p == 0
 				payment_interest = (balance * @interest_rate)/12
 				payment_principal = @monthly_payment - payment_interest
-				principal += payment_principal.round(2)
-				interest += payment_interest.round(2)
-				balance = balance - payment_principal.round(2)
+				principal = principal + payment_principal
+				interest += payment_interest
+				balance = balance - payment_principal
+				profit = profit + (@rental_rate - @monthly_payment)
+				# puts "Payment #{p} principal #{principal.round(2)}"
 			end
 		end
-		return {:balance => balance.round(2), :principal => principal.round(2), :interest => interest.round(2)}
+		return {:balance => balance.round(2), :principal => principal.round(2), :interest => interest.round(2), :profit => profit}
 	end
 end
 

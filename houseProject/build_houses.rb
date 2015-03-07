@@ -3,7 +3,7 @@ require "awesome_print"
  
 intitial_money = 20000
  
-house1 = House.new(155000, 10000, 830, 0.04, 120, 30)
+house1 = House.new(155000, 10000, 830, 0.04, 120, 30, 1)
 
 years = (1..30).to_a
  
@@ -28,7 +28,7 @@ years.each do |year|
 	term = 30
 
 	homes["house#{year}_1"] = House.new(house_price, downpayment, taxes, 0.04, insurance, term, year)
-	house = House.new(house_price, downpayment, taxes, 0.04, insurance, term)
+	#house = House.new(house_price, downpayment, taxes, 0.04, insurance, term)
 
 	#homes["house#{year}_2"] = House.new((150000 + rand(100000), downpayment, (house_price * 0.006).round(2), 0.04, insurance, term, year) if year < 10
 	# puts "******************************************"
@@ -61,3 +61,24 @@ end
 # puts "Proposed monly rent rate = $#{house1.rental_rate}"
 # puts "Total paid to lender = $#{house1.total_loan_amount}"
 # puts "Total interest paid to lender = $#{house1.total_loan_interest}"
+
+
+years.each do |year|
+	profit = 0
+	principal = 0
+	debt = 0
+	count = 0
+	years.each do |year2|
+		if year2 <= year 
+			count += 1
+			principal = principal + homes["house#{year}_1"].stats["year_#{year}"][:principal]
+			debt = debt + homes["house#{year}_1"].stats["year_#{year}"][:balance]
+			profit = profit + homes["house#{year}_1"].stats["year_#{year}"][:profit]
+		end
+	end
+
+	puts "In year #{year}, house count = #{count}, Equity = $#{principal.round(2)}, Total debt = $#{debt.round(2)}, Rental profit = $#{profit.round(2)}"
+end
+
+
+

@@ -74,22 +74,25 @@ end
 
 		(1..30).each do |year|
 			house_price = (150000 + rand(100000))
+			#puts house_price
 			insurance = 130
 			term = 30
 
 			@homes["house#{year}"] = House.new(house_price, 0.04, insurance, term)
 		end
 
-		(1..60).each do |year|
-				stats = self.get_year_stats(year)
-				profit = self.comma_numbers(stats[:profit].round)
-				equity = self.comma_numbers(stats[:equity].round)
-				debt = self.comma_numbers(stats[:debt].round)
-				cash_flow = self.comma_numbers(stats[:cash_flow].round)
-				count = stats[:count]
+		# (1..60).each do |year|
+		# 		stats = self.get_year_stats(year)
+		# 		profit = self.comma_numbers(stats[:profit].round)
+		# 		equity = self.comma_numbers(stats[:equity].round)
+		# 		debt = self.comma_numbers(stats[:debt].round)
+		# 		cash_flow = self.comma_numbers(stats[:cash_flow].round)
+		# 		count = stats[:count]
 
-			puts "In year #{year}; house count = #{count}; Equity = $#{equity}; Total debt = $#{debt}; Rental profit = $#{profit}; Cash Flow = $#{cash_flow}"
-		end
+		# 	#puts "In year #{year}; house count = #{count}; Equity = $#{equity}; Total debt = $#{debt}; Rental profit = $#{profit}; Cash Flow = $#{cash_flow}"
+
+		# end
+		ap @homes['house1'].stats
 	end
 
 
